@@ -11,7 +11,6 @@ public class Truck extends SimpleCar {
     static final int MAX_POWER = 190;
     static final int MAX_FUEL = 500;
     static final int MIN_FUEL = 70;
-    GeneratorCharacteristicsCar generator;
 
     public Truck(String number, String color, double power, int fuelReverse) {
         super(CarTypes.TRUCK, number, color, power, fuelReverse);

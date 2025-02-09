@@ -1,5 +1,6 @@
 package org.example.areas.repair;
 
+import lombok.Getter;
 import org.example.areas.AreaForCar;
 import org.example.cars.Car;
 import org.example.enums.AreaType;
@@ -7,10 +8,11 @@ import org.example.enums.CarTypes;
 
 import java.util.ArrayList;
 
+@Getter
 public abstract class SimpleRepair implements AreaForCar{
-    private int capacity;
+    private final int capacity;
     private final ArrayList<Car> carsInArea;
-    private AreaType areaType;
+    private final AreaType areaType;
     protected CarTypes suitableAreaType;
 
     public SimpleRepair(int capacity) {
@@ -19,8 +21,6 @@ public abstract class SimpleRepair implements AreaForCar{
         areaType = AreaType.REPAIR_AREA;
         setSuitableAreaType();
     }
-
-    abstract void setSuitableAreaType();
 
     @Override
     public void addCarToPlace(Car car) {
@@ -32,11 +32,6 @@ public abstract class SimpleRepair implements AreaForCar{
     @Override
     public void removeCarFromPlace(Car car) {
         carsInArea.remove(car);
-    }
-
-    @Override
-    public AreaType getAreaType() {
-        return areaType;
     }
 
     @Override
@@ -53,4 +48,6 @@ public abstract class SimpleRepair implements AreaForCar{
     public boolean isSuitableTypeOfMachine(CarTypes carType) {
         return suitableAreaType == carType;
     }
+
+    abstract void setSuitableAreaType();
 }

@@ -1,5 +1,7 @@
 package org.example.cars;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.areas.AreaForCar;
 import org.example.cars.utils.GEO;
 import org.example.cars.utils.GeneratorCharacteristicsCar;
@@ -14,7 +16,9 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Getter
 public abstract class SimpleCar implements Car, Cloneable {
+    @Setter
     String number;
     String color;
     double power;
@@ -42,31 +46,6 @@ public abstract class SimpleCar implements Car, Cloneable {
     }
 
     @Override
-    public String getNumber() {
-        return number;
-    }
-
-    @Override
-    public String getColor() {
-        return color;
-    }
-
-    @Override
-    public double getPower() {
-        return power;
-    }
-
-    @Override
-    public int getGasTank() {
-        return maxGasTank;
-    }
-
-    @Override
-    public CarTypes getTypeCar() {
-        return typeCar;
-    }
-
-    @Override
     public void run(Track track) {
         this.track = track;
         lastLatitude = track.getCheckpoints().getFirst().getLatitude();
@@ -78,17 +57,24 @@ public abstract class SimpleCar implements Car, Cloneable {
 
     @Override
     public String toString() {
-        return typeCar.nameCar() + "<" + getNumber() + "> - " + getColor() + ":power-" + getPower() + "/fuel supply-" + getGasTank();
+        return typeCar.nameCar() + "<" + getNumber() + "> - " + getColor() + ":power-" + getPower() + "/fuel supply-" + getMaxGasTank();
     }
 
     @Override
-    public ArrayList<Checkpoint> getPassedCheckpoint() {
-        return passedCheckpoint;
-    }
-
-    @Override
-    public ArrayList<Checkpoint> getNoPassedCheckpoint() {
-        return noPassedCheckpoint;
+    public SimpleCar clone() {
+        try {
+            SimpleCar clone = (SimpleCar) super.clone();
+            Pattern pattern = Pattern.compile("(\\d+)");
+            Matcher matcher = pattern.matcher(clone.getNumber());
+            int number = 0;
+            if (matcher.find()) {
+                number = Integer.parseInt(matcher.group(1));
+            }
+            clone.setNumber(GeneratorCharacteristicsCar.generateNumber(number + 1));
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 
     protected Map<String, Double> getLocation(int elapsedTimeInSeconds, int minPower) {
@@ -104,7 +90,7 @@ public abstract class SimpleCar implements Car, Cloneable {
         } else {
             if (isLocatedInTheParkingLot && passedCheckpoint.getLast().getParkingAreas() != null) {
                 for (AreaForCar area : passedCheckpoint.getLast().getParkingAreas()) {
-                    if (area.isSuitableTypeOfMachine(getTypeCar())) {
+                    if (area != null && area.isSuitableTypeOfMachine(getTypeCar())) {
                         area.removeCarFromPlace(this);
                         isLocatedInTheParkingLot = false;
                     }
@@ -112,7 +98,7 @@ public abstract class SimpleCar implements Car, Cloneable {
             }
             if (isLocatedInTheRepairArea && passedCheckpoint.getLast().getParkingAreas() != null) {
                 for (AreaForCar area : passedCheckpoint.getLast().getRepairAreas()) {
-                    if (area.isSuitableTypeOfMachine(getTypeCar())) {
+                    if (area != null && area.isSuitableTypeOfMachine(getTypeCar())) {
                         area.removeCarFromPlace(this);
                         isLocatedInTheRepairArea = false;
                     }
@@ -277,27 +263,6 @@ public abstract class SimpleCar implements Car, Cloneable {
             elapsedTimeInSeconds -= currentTimeStopped;
             currentTimeStopped = 0;
             return elapsedTimeInSeconds;
-        }
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    @Override
-    public SimpleCar clone() {
-        try {
-            SimpleCar clone = (SimpleCar) super.clone();
-            Pattern pattern = Pattern.compile("(\\d+)");
-            Matcher matcher = pattern.matcher(clone.getNumber());
-            int number = 0;
-            if (matcher.find()) {
-                number = Integer.parseInt(matcher.group(1));
-            }
-            clone.setNumber(GeneratorCharacteristicsCar.generateNumber(number + 1));
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
         }
     }
 }

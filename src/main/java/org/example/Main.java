@@ -57,35 +57,35 @@ public class Main {
         Track track = new DefaultTrackRostovVolgograd();
 //        Track track = getBaseTrack();
 
-        ArrayList<Car> cars = createCar();
-        printStart(cars, track);
-        allowTrafficToPass(cars, track);
+        var carsList = createCar();
+        printStart(carsList, track);
+        allowTrafficToPass(carsList, track);
 
-        ArrayList<Car> carsWin = new ArrayList<>();
+        ArrayList<Car> carWinsList = new ArrayList<>();
 
         while (!isWinner) {
             printCurrentLocationHeader();
-            waiting(timeBetweenLocationRequests * 100);  //скорость печати в консоль, для эффекта поступающих данных
+            waiting(timeBetweenLocationRequests * 100);  //скорость печати в консоль, для эффекта поступающих данных (если закомментировать то результаты моментально)
             setActualPenaltyAndRequestTime();
 
-            for (Car car : cars) {
-                if (!carsWin.contains(car)) {
-                    Map<String, Double> carLocation = car.getLocation(timeBetweenLocationRequests);
-                    printCurrentLocation(car, carLocation);
-                    if (carLocation.get("crossing") != null && carLocation.get("crossing") > 0 && track.isLastCheckpoint(car.getPassedCheckpoint().getLast())) {
-                        carsWin.add(car);
+            for (var car : carsList) {
+                if (!carWinsList.contains(car)) {
+                    var mapCarLocation = car.getLocation(timeBetweenLocationRequests);
+                    printCurrentLocation(car, mapCarLocation);
+                    if (mapCarLocation.get("crossing") != null && mapCarLocation.get("crossing") > 0 && track.isLastCheckpoint(car.getPassedCheckpoint().getLast())) {
+                        carWinsList.add(car);
                         int penaltyCurrentCar = getFuel(track, car);
                         if (penaltyWaitingTime <= 0 && penaltyCurrentCar <= 0) {
                             printWinner(car);
                             if (isWinner) break;
                         }
-                        if (carsWin.size() < 2) penaltyWaitingTime = penaltyCurrentCar;
+                        if (carWinsList.size() < 2) penaltyWaitingTime = penaltyCurrentCar;
                         printFinishedMessage(car, penaltyWaitingTime);
                     }
                 }
             }
-            if (penaltyWaitingTime == 0 && !carsWin.isEmpty()) {
-                printWinner(carsWin.getFirst());
+            if (penaltyWaitingTime == 0 && !carWinsList.isEmpty()) {
+                printWinner(carWinsList.getFirst());
             }
         }
     }
@@ -94,9 +94,9 @@ public class Main {
         CarFactory carFactory = new CarFactoryImpl();
         ArrayList<Car> cars = new ArrayList<>();
 
-        Car car1 = carFactory.createRandomCar(CarTypes.TRUCK);
-        Car car2 = carFactory.createRandomCar(CarTypes.PASSENGER);
-        Car car3 = carFactory.createCar(CarTypes.PASSENGER, "LK24L", Colors.WHITE.getColor(), 170.0, 60);
+        var car1 = carFactory.createRandomCar(CarTypes.TRUCK);
+        var car2 = carFactory.createRandomCar(CarTypes.PASSENGER);
+        var car3 = carFactory.createCar(CarTypes.PASSENGER, "LK24L", Colors.WHITE.getColor(), 170.0, 60);
 //        Car car4 = ((SimpleCar)car3).clone();
 //
 //        System.out.println(car4);
@@ -108,16 +108,16 @@ public class Main {
     }
 
     private static Track getBaseTrack() {
-        Checkpoint checkpoint1 = CheckpointMandatory.onlyCoordinatesAndName("Точка1", -90, -90);
-        Checkpoint checkpoint2 = CheckpointOptional.onlyCoordinatesAndName("Точка2", -10.0, 0.0, 10);
-        Checkpoint checkpoint3 = CheckpointMandatory.onlyCoordinatesAndName("Точка1", 10, 15);
+        var checkpoint1 = CheckpointMandatory.onlyCoordinatesAndName("Точка1", -90, -90);
+        var checkpoint2 = CheckpointOptional.onlyCoordinatesAndName("Точка2", -10.0, 0.0, 10);
+        var checkpoint3 = CheckpointMandatory.onlyCoordinatesAndName("Точка1", 10, 15);
 
         AreaCreator areaCreator = new RepairCreator();
-        AreaForCar truckRepairArea = areaCreator.createAreaForCar(CarTypes.TRUCK, 1);
-        AreaForCar passRepairArea = areaCreator.createAreaForCar(CarTypes.PASSENGER, 2);
+        var truckRepairArea = areaCreator.createAreaForCar(CarTypes.TRUCK, 1);
+        var passRepairArea = areaCreator.createAreaForCar(CarTypes.PASSENGER, 2);
         areaCreator = new ParkingCreator();
-        AreaForCar passParkingArea = areaCreator.createAreaForCar(CarTypes.PASSENGER, 3);
-        AreaForCar truckParkingArea = areaCreator.createAreaForCar(CarTypes.TRUCK, 1);
+        var passParkingArea = areaCreator.createAreaForCar(CarTypes.PASSENGER, 3);
+        var truckParkingArea = areaCreator.createAreaForCar(CarTypes.TRUCK, 1);
 
         checkpoint1.addParkingArea(truckParkingArea);
         checkpoint2.addParkingArea(passParkingArea);
@@ -125,7 +125,7 @@ public class Main {
         checkpoint3.addParkingArea(passParkingArea);
         checkpoint2.addRepairArea(truckRepairArea);
 
-        Track track = new BaseTrack();
+        var track = new BaseTrack();
         track.addCheckpoint(checkpoint1);
         track.addCheckpoint(checkpoint2);
         track.addCheckpoint(checkpoint3);

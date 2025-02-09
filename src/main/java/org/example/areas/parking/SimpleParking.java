@@ -8,9 +8,9 @@ import org.example.enums.CarTypes;
 import java.util.ArrayList;
 
 public abstract class SimpleParking implements AreaForCar {
-    private int capacity;
+    private final int capacity;
     private final ArrayList<Car> carsInArea;
-    private AreaType areaType;
+    private final AreaType areaType;
     protected CarTypes suitableAreaType;
 
     public SimpleParking(int capacity) {
@@ -19,8 +19,6 @@ public abstract class SimpleParking implements AreaForCar {
         areaType = AreaType.PARKING;
         setSuitableAreaType();
     }
-
-    abstract void setSuitableAreaType();
 
     @Override
     public void addCarToPlace(Car car) {
@@ -53,4 +51,6 @@ public abstract class SimpleParking implements AreaForCar {
     public boolean isSuitableTypeOfMachine(CarTypes carType) {
         return suitableAreaType == carType;
     }
+
+    abstract void setSuitableAreaType();
 }

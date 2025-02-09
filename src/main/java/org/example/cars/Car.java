@@ -30,19 +30,13 @@ public interface Car {
      * Получает объем бензобака
      * @return {@code int} объем бензобака
      */
-    int getGasTank();
+    int getMaxGasTank();
 
     /**
      * Получает тип машины из образцов {@code CarTypes}
      * @return {@code CarTypes} тип машины
      */
     CarTypes getTypeCar();
-
-    /**
-     * Устанавливает начальные координаты машины
-     * @param track маршрут, по которому будет производиться движение
-     */
-    void run(Track track);
 
     /**
      * Получает данные по местонахождению и состоянию машины
@@ -62,4 +56,10 @@ public interface Car {
      * @return {@code ArrayList<Checkpoint>} список не посещенных контрольных точек
      */
     ArrayList<Checkpoint> getNoPassedCheckpoint();
+
+    /**
+     * Устанавливает начальные координаты машины
+     * @param track маршрут, по которому будет производиться движение
+     */
+    void run(Track track);
 }
