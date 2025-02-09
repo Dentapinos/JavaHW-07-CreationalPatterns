@@ -1,7 +1,6 @@
 package org.example.checkpoints;
 
 import org.example.areas.AreaForCar;
-import org.example.areas.area.Area;
 
 import java.util.ArrayList;
 

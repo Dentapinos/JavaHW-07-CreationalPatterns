@@ -1,7 +1,6 @@
 package org.example.checkpoints;
 
 import org.example.areas.AreaForCar;
-import org.example.areas.area.Area;
 
 import java.util.ArrayList;
 
@@ -76,7 +75,4 @@ public abstract class SimpleCheckpoint implements Checkpoint {
             throw new IllegalArgumentException("Широта должна быть в пределах от -90.0 до +90.0");
         }
     }
-
-
-
 }

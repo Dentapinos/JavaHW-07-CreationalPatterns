@@ -49,14 +49,6 @@ public abstract class SimpleRepair implements AreaForCar{
         return false;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public void setAreaType(AreaType areaType) {
-        this.areaType = areaType;
-    }
-
     @Override
     public boolean isSuitableTypeOfMachine(CarTypes carType) {
         return suitableAreaType == carType;
