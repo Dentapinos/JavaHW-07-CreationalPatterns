@@ -4,9 +4,7 @@ import org.example.areas.AreaForCar;
 import org.example.areas.AreaCreator;
 import org.example.areas.ParkingCreator;
 import org.example.areas.RepairCreator;
-import org.example.cars.Car;
-import org.example.cars.CarFactory;
-import org.example.cars.CarFactoryImpl;
+import org.example.cars.*;
 import org.example.checkpoints.Checkpoint;
 import org.example.checkpoints.CheckpointMandatory;
 import org.example.checkpoints.CheckpointOptional;
@@ -98,8 +96,6 @@ public class Main {
         var car2 = carFactory.createRandomCar(CarTypes.PASSENGER);
         var car3 = carFactory.createCar(CarTypes.PASSENGER, "LK24L", Colors.WHITE.getColor(), 170.0, 60);
 //        Car car4 = ((SimpleCar)car3).clone();
-//
-//        System.out.println(car4);
 
         cars.add(car1);
         cars.add(car2);

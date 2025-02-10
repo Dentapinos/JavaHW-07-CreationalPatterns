@@ -2,15 +2,16 @@ package org.example.cars;
 
 import org.example.cars.utils.GeneratorCharacteristicsCar;
 import org.example.enums.CarTypes;
+import org.example.enums.CharacteristicsCar;
 
 import java.util.Map;
 
 public class PassengerCar extends SimpleCar {
     static int numberCar = 0;
-    static final int MIN_POWER = 100;
-    static final int MAX_POWER = 230;
-    static final int MIN_FUEL = 40;
-    static final int MAX_FUEL = 70;
+    static final int MIN_POWER = CharacteristicsCar.PASSENGER_MIN_POWER.value;
+    static final int MAX_POWER = CharacteristicsCar.PASSENGER_MAX_POWER.value;
+    static final int MIN_FUEL = CharacteristicsCar.PASSENGER_MIN_FUEL.value;
+    static final int MAX_FUEL = CharacteristicsCar.PASSENGER_MAX_FUEL.value;
 
     public PassengerCar(String number, String color, double power, int fuelReverse) {
         super(CarTypes.PASSENGER, number, color, power, fuelReverse);
