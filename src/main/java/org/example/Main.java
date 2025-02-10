@@ -53,7 +53,7 @@ public class Main {
      */
     public static void main(String[] args) {
         Track track = new DefaultTrackRostovVolgograd();
-//        Track track = getBaseTrack();
+//        Track track = getBaseTrack(); // можно создать трек самому, getBaseTrack() это пример создания
 
         var carsList = createCar();
         printStart(carsList, track);

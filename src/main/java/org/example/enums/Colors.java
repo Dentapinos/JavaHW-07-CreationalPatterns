@@ -1,5 +1,8 @@
 package org.example.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum Colors {
     BLACK("черный"),
     RED("красный"),
@@ -15,7 +18,4 @@ public enum Colors {
         this.color = color;
     }
 
-    public String getColor() {
-        return color;
-    }
 }
